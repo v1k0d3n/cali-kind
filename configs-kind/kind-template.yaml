@@ -1,0 +1,15 @@
+# NOTES:
+# CIDR: 10.244.0.0/16
+# kind build node-image --type apt --cni calico-ipv6
+---
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+name: ${KIND_NAME_CLUSTER}
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+networking:
+  disableDefaultCNI: true
+  serviceSubnet: "${KIND_CIDR_SRV}"
+  podSubnet: "${KIND_CIDR_POD}"
