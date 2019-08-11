@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
 source ./cali-kind.env
 
-# Color Definitions:
-CLEAR='\033[0m'
-RED='\033[31m'
-GREEN='\033[32m'
-YELLOW='\033[33m'
-BOLD_RED='\033[1m\033[31m'
-BOLD_GREEN='\033[1m\033[32m'
-BOLD_YELLOW='\033[1m\033[33m'
-
 # Create the Kind configuration based on our template (change ahead of time for customizations):
 printf " \n"
 printf "${BOLD_YELLOW}Destroying the cluster named /"${KIND_NAME_CLUSTER}/": ${CLEAR} \n"
+unset KUBECONFIG
 kind delete cluster --name ${KIND_NAME_CLUSTER}

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+source ../cali-kind.env
+
+
+# KUBERNETES CONTROL PLANE CHECK: kube-apiserver
+printf "${BOLD_YELLOW}Waiting for Kubernetes control plane artifacts to become stable: kube-apiserver ${CLEAR} \n"
+printf "${BOLD_YELLOW}Please wait${CLEAR}"
+KUBE_APISERVER_COUNT=$(kubectl get pods --ignore-not-found=true -l "component=kube-apiserver" -n kube-system | sed '1d' | wc -l)
+until [ "$(kubectl get pods -n kube-system --no-headers 2>/dev/null | grep "Running" | grep "kube-apiserver-${KIND_NAME_CLUSTER}-control-plane" | grep "1/1" | wc -l)" -ge ${KUBE_APISERVER_COUNT} ]; do
+  printf '.'
+  sleep 1
+done
+printf "${BOLD_GREEN} OK!${CLEAR}"
+printf " \n"

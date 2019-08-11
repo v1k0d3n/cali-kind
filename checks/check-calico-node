@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+source ../cali-kind.env
+
+
+# KUBERNETES CONTROL PLANE CHECK: kube-dns
+printf "${BOLD_YELLOW}Waiting for Calico node agents to become stable: calico-node ${CLEAR} \n"
+printf "${BOLD_YELLOW}Please wait${CLEAR}"
+CALICO_NODE_COUNT=$(kubectl get pods --ignore-not-found=true -l "k8s-app=calico-node" -n kube-system | sed '1d' | wc -l)
+until [ "$(kubectl get pods -n kube-system --no-headers 2>/dev/null | grep "Running" | grep "calico-node-" | grep "1/1" | wc -l)" -ge ${CALICO_NODE_COUNT} ]; do
+  printf '.'
+  sleep 1
+done
+printf "${BOLD_GREEN} OK!${CLEAR}"
+printf " \n"

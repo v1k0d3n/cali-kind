@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+source ../cali-kind.env
+
+
+# KIND CONTROL PLANE CHECK: nodes
+printf "${BOLD_YELLOW}Waiting for the kind nodes to come up: ${CLEAR} \n"
+printf "${BOLD_YELLOW}Please wait${CLEAR}"
+KIND_NODE_COUNT=$(docker ps | grep "kindest/node" | grep "${KIND_NAME_CLUSTER}" | wc -l)
+until [ "$(docker ps | grep "kindest/node" | grep "${KIND_NAME_CLUSTER}" | wc -l)" -ge 3 ]; do
+  printf '.'
+  sleep 1
+  KIND_NODE_COUNT=$(docker ps | grep "kindest/node" | grep "${KIND_NAME_CLUSTER}" | wc -l)
+done
+printf "${BOLD_GREEN} OK!${CLEAR}"
+printf " \n"
