@@ -3,7 +3,7 @@ source ../cali-kind.env
 
 
 # KUBERNETES CONTROL PLANE CHECK: kube-dns
-printf "${BOLD_YELLOW}Waiting for Calico node agents to become stable: calico-node ${CLEAR} \n"
+printf "${BOLD_YELLOW}Waiting for Calico node agents to become stable: calico-controller ${CLEAR} \n"
 printf "${BOLD_YELLOW}Please wait${CLEAR}"
 CALICO_CONTROLLER_COUNT=$(kubectl get pods --ignore-not-found=true -l "k8s-app=calico-kube-controllers" -n kube-system | sed '1d' | wc -l)
 until [ "$(kubectl get pods -n kube-system --no-headers 2>/dev/null | grep "Running" | grep "calico-kube-controllers-" | grep "1/1" | wc -l)" -ge ${CALICO_CONTROLLER_COUNT} ]; do
