@@ -23,6 +23,9 @@ printf "${BOLD_YELLOW}Showing all deployed KinD clusters: \n"
 kind get clusters
 source ./cali-kind.env
 
+export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_NAME_CLUSTER}")"
+ kubectl cluster-info
+
 pushd ./checks
 ./check-kind-node
 ./check-kube-proxy
