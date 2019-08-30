@@ -1,17 +1,29 @@
-name: CI
-
-on: [push]
+name: "Create cluster using KinD"
+on: [pull_request, push]
 
 jobs:
-  build:
-
+  kind:
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
+    steps:       
+    - uses: actions/checkout@master
+      with:
+        version: "v0.5.0" 
+    - uses: flydiverny/helm-package-action@master
+    - uses: v1k0d3n/setup-kind@v0.1.0
+      with:
+        version: "v0.5.1"
+        skipClusterCreation: true
+        name: test-cali-kind
+    - name: Testing the cali-kind deployment
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        ls -asl
+        whoami
+        ls -asl /usr/local/bin/
+        docker ps -a
+        docker images
+        chmod +x cali-kind-*
+        ./cali-kind-deploy
+        kubectl cluster-info
+        kubectl get pods -n kube-system
+        ./cali-kind-destroy
