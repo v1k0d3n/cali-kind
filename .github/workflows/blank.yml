@@ -13,7 +13,7 @@ jobs:
       with:
         version: "v0.5.1"
         skipClusterCreation: true
-        name: test-cali-kind
+        name: calico-testing
     - name: Testing the cali-kind deployment
       run: |
         export KUBECONFIG="$(kind get kubeconfig-path)"
