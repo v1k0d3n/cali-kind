@@ -15,11 +15,14 @@ jobs:
         skipClusterCreation: true
         name: calico-testing
     - name: Testing the cali-kind deployment
+      env:
+        KIND_NAME_CLUSTER: calico-testing
       run: |
-        export KUBECONFIG="$(kind get kubeconfig-path)"
+        export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_NAME_CLUSTER}")"
         ls -asl
         whoami
         ls -asl /usr/local/bin/
+        ls -asl ./manifests/
         docker ps -a
         docker images
         chmod +x cali-kind-*
