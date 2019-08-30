@@ -17,6 +17,10 @@ printf "${BOLD_YELLOW}Creating kind cluster named \"${KIND_NAME_CLUSTER}\": ${CL
 kind create cluster --name ${KIND_NAME_CLUSTER} --config manifests/kind-deployment.yaml
 
 # Source the other Kubernetes settings from our environment file before we continue on to other things:
+# Showing the KinD clusters:
+printf " \n"
+printf "${BOLD_YELLOW}Showing all deployed KinD clusters: \n"
+kind get clusters
 source ./cali-kind.env
 
 pushd ./checks
