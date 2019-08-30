@@ -24,6 +24,7 @@ jobs:
         docker images
         chmod +x cali-kind-*
         ./cali-kind-deploy
+        ./checks/check-kube-apiserver
         kubectl apply -f manifests/calico-deployment.yaml
         kubectl get pods -n kube-system
         ./checks/check-calico-controller
