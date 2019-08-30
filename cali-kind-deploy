@@ -22,16 +22,26 @@ printf " \n"
 printf "${BOLD_YELLOW}Showing all deployed KinD clusters: \n"
 kind get clusters
 source ./cali-kind.env
-
 export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_NAME_CLUSTER}")"
- kubectl cluster-info
 
+# Show the cluster information:
+printf " \n"
+printf "${BOLD_YELLOW}Showing all deployed KinD clusters: \n"
+kubectl cluster-info
+
+# Debug information:
+set -x
+printf " \n"
+printf "${BOLD_RED}Directory BEFORE running checks: \n"
 pushd ./checks
 ./check-kind-node
 ./check-kube-proxy
 ./check-kube-scheduler
 ./check-kube-apiserver
 popd
+# Debug information:
+printf " \n"
+printf "${BOLD_RED}Directory AFTER running checks: \n"
 
 # Create the cluster based on our information generated above:
 # printf " \n"
