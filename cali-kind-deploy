@@ -33,6 +33,7 @@ kubectl cluster-info
 set -x
 printf " \n"
 printf "${BOLD_RED}Directory BEFORE running checks: \n"
+ls -asl
 pushd ./checks
 ./check-kind-node
 ./check-kube-proxy
@@ -42,6 +43,7 @@ popd
 # Debug information:
 printf " \n"
 printf "${BOLD_RED}Directory AFTER running checks: \n"
+ls -asl
 
 # Create the cluster based on our information generated above:
 # printf " \n"
