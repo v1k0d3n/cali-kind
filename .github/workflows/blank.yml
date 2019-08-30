@@ -25,13 +25,13 @@ jobs:
         chmod +x cali-kind-*
         ./cali-kind-deploy
         pushd ./checks
-        ./checks/check-kube-apiserver
+        ./check-kube-apiserver
         popd
         kubectl apply -f manifests/calico-deployment.yaml
         kubectl get pods -n kube-system
         pushd ./checks
-        ./checks/check-calico-controller
-        ./checks/check-calico-node
+        ./check-calico-controller
+        ./check-calico-node
         popd
         kubectl cluster-info
         kubectl get pods -n kube-system
