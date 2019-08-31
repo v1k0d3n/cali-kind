@@ -29,10 +29,10 @@ jobs:
         ./cali-kind-deploy
         kubectl get pods -n kube-system
         kubectl apply -f manifests/calico-deployment.yaml
-        sleep 5
+        sleep 2
         pushd ./checks
-        ./check-calico-controller
         ./check-calico-node
+        ./check-calico-controller
         popd
         kubectl get pods -n kube-system
         kubectl cluster-info
