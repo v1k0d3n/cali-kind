@@ -33,6 +33,7 @@ jobs:
         ./check-calico-controller
         ./check-calico-node
         popd
+        sleep 5
         kubectl get pods -n kube-system
         kubectl cluster-info
         ./cali-kind-destroy
