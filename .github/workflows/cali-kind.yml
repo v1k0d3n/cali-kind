@@ -1,4 +1,4 @@
-name: "Create cluster using KinD"
+name: "Deploy KinD Cluster with Calico CNI/NetworkPolicy"
 on: [pull_request, push]
 
 jobs:
