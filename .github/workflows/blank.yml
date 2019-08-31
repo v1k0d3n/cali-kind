@@ -18,24 +18,23 @@ jobs:
       env:
         KIND_NAME_CLUSTER: calico-testing
       run: |
-        export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_NAME_CLUSTER}")"
-        ls -asl
         whoami
-        ls -asl /usr/local/bin/
+        ls -asl
         ls -asl ./manifests/
+        ls -asl /usr/local/bin/
         docker ps -a
         docker images
+        export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_NAME_CLUSTER}")"
         chmod +x cali-kind-*
         ./cali-kind-deploy
-        pushd ./checks
-        ./check-kube-apiserver
-        popd
-        kubectl apply -f manifests/calico-deployment.yaml
         kubectl get pods -n kube-system
+        kubectl apply -f manifests/calico-deployment.yaml
         pushd ./checks
         ./check-calico-controller
         ./check-calico-node
         popd
-        kubectl cluster-info
         kubectl get pods -n kube-system
+        kubectl cluster-info
         ./cali-kind-destroy
+        sleep 2
+        docker images
